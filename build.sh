@@ -29,14 +29,15 @@ strip_virtualenv () {
     pwd
     pushd $VIRTUAL_ENV/lib64/python2.7/site-packages/
     pwd
-    zip -r -9 -q outputs/venv.zip *
+    mkdir ../outputs
+    zip -r -9 -q ../outputs/venv.zip *
     popd
-    echo "site-packages compressed size $(du -sh $VIRTUAL_ENV/outputs/venv.zip | cut -f1)"
-    popd
-    pushd $VIRTUAL_ENV
-    zip -r -q outputs/full-venv.zip * 
-    popd
-    echo "venv compressed size $(du -sh $VIRTUAL_ENV/outputs/full-venv.zip | cut -f1)"
+    echo "site-packages compressed size $(du -sh $VIRTUAL_ENV/lib64/python2.7/outputs/venv.zip | cut -f1)"
+    cp  $VIRTUAL_ENV/lib64/python2.7/outputs/venv.zip .
+    #pushd $VIRTUAL_ENV
+    #zip -r -q outputs/full-venv.zip * 
+    #popd
+    #echo "venv compressed size $(du -sh $VIRTUAL_ENV/outputs/full-venv.zip | cut -f1)"
 }
 
 shared_libs () {
