@@ -25,12 +25,18 @@ strip_virtualenv () {
     echo "venv original size $(du -sh $VIRTUAL_ENV | cut -f1)"
     find $VIRTUAL_ENV/lib64/python2.7/site-packages/ -name "*.so" | xargs strip
     echo "venv stripped size $(du -sh $VIRTUAL_ENV | cut -f1)"
-
-    pushd $VIRTUAL_ENV/lib64/python2.7/site-packages/ && zip -r -9 -q /outputs/venv.zip * ; popd
-    echo "site-packages compressed size $(du -sh /outputs/venv.zip | cut -f1)"
-
-    pushd $VIRTUAL_ENV && zip -r -q /outputs/full-venv.zip * ; popd
-    echo "venv compressed size $(du -sh /outputs/full-venv.zip | cut -f1)"
+    ls $VIRTUAL_ENV/lib64/python2.7/site-packages/
+    pwd
+    pushd $VIRTUAL_ENV/lib64/python2.7/site-packages/
+    pwd
+    zip -r -9 -q outputs/venv.zip *
+    popd
+    echo "site-packages compressed size $(du -sh $VIRTUAL_ENV/outputs/venv.zip | cut -f1)"
+    popd
+    pushd $VIRTUAL_ENV
+    zip -r -q outputs/full-venv.zip * 
+    popd
+    echo "venv compressed size $(du -sh $VIRTUAL_ENV/outputs/full-venv.zip | cut -f1)"
 }
 
 shared_libs () {
